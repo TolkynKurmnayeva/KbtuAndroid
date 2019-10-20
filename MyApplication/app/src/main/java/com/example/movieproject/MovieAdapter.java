@@ -1,0 +1,86 @@
+package com.example.movieproject;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
+import java.util.List;
+
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
+    private List<Movie> moviesList;
+    private Context mContext;
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView title, year, genre;
+        public ImageView poster;
+        public LinearLayout movieCard;
+        public ImageButton listShareButton;
+
+        public MyViewHolder(View view) {
+            super(view);
+            listShareButton = (ImageButton) view.findViewById(R.id.listShareButton);
+            title = (TextView) view.findViewById(R.id.title);
+            genre = (TextView) view.findViewById(R.id.genre);
+            year = (TextView) view.findViewById(R.id.year);
+            poster = (ImageView) view.findViewById(R.id.poster);
+            movieCard = (LinearLayout) view.findViewById(R.id.movieCard);
+        }
+
+
+
+    }
+    public MovieAdapter(){
+        super();
+    }
+
+    public MovieAdapter(Context mContext, List<Movie> moviesList) {
+        this.mContext=mContext;
+        this.moviesList = moviesList;
+    }
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.movie_card, parent, false);
+
+        return new MyViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        final Movie movie = moviesList.get(position);
+        holder.title.setText(movie.getTitle());
+        holder.genre.setText(movie.getGenre());
+        holder.year.setText(movie.getYear());
+        Glide.with(mContext).load(movie.poster).into(holder.poster);
+        holder.listShareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                String movieText = "Title: " + movie.getTitle() + "\nGenre: " + movie.getGenre() + "\nYear: " + movie.getYear() + "\nDescription: " + movie.getDescription();
+                sendIntent.putExtra(Intent.EXTRA_TEXT, movieText);
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                mContext.startActivity(shareIntent);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return moviesList.size();
+    }
+
+}
