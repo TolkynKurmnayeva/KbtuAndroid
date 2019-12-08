@@ -59,7 +59,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.genre.setText(movie.getGenre());
         holder.year.setText(movie.getYear());
         Glide.with(mContext).load(movie.poster).into(holder.poster);
-
     }
 
     @Override
