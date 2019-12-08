@@ -47,4 +47,7 @@ public class Movie {
         this.genre = genre;
     }
 
+    public int getPoster() {
+        return poster;
+    }
 }

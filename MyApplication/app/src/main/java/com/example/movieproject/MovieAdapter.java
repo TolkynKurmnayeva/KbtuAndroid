@@ -28,16 +28,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
         public MyViewHolder(View view) {
             super(view);
-            listShareButton = (ImageButton) view.findViewById(R.id.listShareButton);
             title = (TextView) view.findViewById(R.id.title);
             genre = (TextView) view.findViewById(R.id.genre);
             year = (TextView) view.findViewById(R.id.year);
             poster = (ImageView) view.findViewById(R.id.poster);
             movieCard = (LinearLayout) view.findViewById(R.id.movieCard);
         }
-
-
-
     }
     public MovieAdapter(){
         super();
@@ -63,19 +59,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.genre.setText(movie.getGenre());
         holder.year.setText(movie.getYear());
         Glide.with(mContext).load(movie.poster).into(holder.poster);
-        holder.listShareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                String movieText = "Title: " + movie.getTitle() + "\nGenre: " + movie.getGenre() + "\nYear: " + movie.getYear() + "\nDescription: " + movie.getDescription();
-                sendIntent.putExtra(Intent.EXTRA_TEXT, movieText);
-                sendIntent.setType("text/plain");
 
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                mContext.startActivity(shareIntent);
-            }
-        });
     }
 
     @Override

@@ -73,14 +73,8 @@
                 android:text="TextView"
                 android:textAlignment="viewEnd" />
 
-            <ImageButton
-                android:id="@+id/listShareButton"
-                android:layout_width="47dp"
-                android:layout_height="8dp"
-                android:layout_gravity="bottom|end"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                app:srcCompat="@drawable/ic_share_outline" />
+            <!--                android:background="@drawable/round_button"-->
+<!--                app:srcCompat="@drawable/ic_share_outline" />-->
 
         </LinearLayout>
 
