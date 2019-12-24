@@ -12,11 +12,12 @@ public interface DetailsContract {
     }
 
     interface Presenter {
-        void onLoad(int position);
-        Intent shareMovie(int position);
+        void onLoad(int movieID);
+        void sendResponse(Movie movie);
+        Intent shareMovie();
     }
 
     interface Repository {
-        Movie  getMovie(int position);
+        void  getMovie(int position);
     }
 }

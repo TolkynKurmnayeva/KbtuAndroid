@@ -28,10 +28,10 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
     private DetailsPresenter mPresenter;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String POSITION = "param1";
+    private static final String MOVIE_ID = "param1";
 
     // TODO: Rename and change types of parameters
-    private int position;
+    private int movieID;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -43,7 +43,7 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
     public static DetailsFragment newInstance(int position) {
         DetailsFragment fragment = new DetailsFragment();
         Bundle args = new Bundle();
-        args.putInt(POSITION, position);
+        args.putInt(MOVIE_ID, position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,7 +52,7 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            position = getArguments().getInt(POSITION,0);
+            movieID = getArguments().getInt(MOVIE_ID,0);
         }
         mPresenter = new DetailsPresenter(this);
     }
@@ -60,24 +60,14 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_details, container, false);
-//        Toolbar toolbar = view.findViewById(R.id.toolbar);
-//        view.setSupportActionBar(toolbar);
         title = view.findViewById(R.id.movie_title);
         descriptionView = view.findViewById(R.id.description);
         moviePosterView = view.findViewById(R.id.poster);
         shareButton = view.findViewById(R.id.shareButton);
-        mPresenter.onLoad(position);
+        mPresenter.onLoad(movieID);
 
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = mPresenter.shareMovie(position);
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivity(shareIntent);
-            }
-        });
+
 
         return view;
     }
@@ -86,45 +76,15 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
         String text = movie.getTitle() + " (" + movie.getYear() + ")";
         title.setText(text);
         descriptionView.setText(movie.getDescription());
-        Glide.with(getContext()).load(movie.getPoster()).into(moviePosterView);
+        Glide.with(getContext()).load("https://image.tmdb.org/t/p/w500/"+movie.getPosterPath()).into(moviePosterView);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = mPresenter.shareMovie();
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+            }
+        });
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-//
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-//
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

@@ -1,5 +1,7 @@
 package com.example.movieproject.MoviesList;
 
+import android.content.Context;
+
 import com.example.movieproject.Movie;
 
 import java.util.List;
@@ -11,10 +13,12 @@ public interface MainContract {
 
     interface Presenter {
         void onLoad();
-        void onClick(int position);
+        void sendResponse(List<Movie> movieList);
+        int getMovieID(int position);
     }
 
     interface Repository {
-        List<Movie>  loadMovies();
+        void  loadMovies();
+        int getMovieID (int position);
     }
 }

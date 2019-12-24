@@ -47,9 +47,7 @@ public class MainFragment extends Fragment implements MainContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-//        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -60,7 +58,7 @@ public class MainFragment extends Fragment implements MainContract.View {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                mListener.onMovieSelected(position);
+                mListener.onMovieSelected(mPresenter.getMovieID(position));
             }
 
             @Override
@@ -73,13 +71,13 @@ public class MainFragment extends Fragment implements MainContract.View {
 
     public void loadMovies(){
         mPresenter.onLoad();
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void setMovies (List<Movie> movieList){
         mAdapter = new MovieAdapter(getContext(),movieList);
         recyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
 
     }
 
@@ -101,15 +99,7 @@ public class MainFragment extends Fragment implements MainContract.View {
         mListener = null;
     }
 
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-
+    public MovieAdapter getmAdapter() {
+        return mAdapter;
+    }
 }

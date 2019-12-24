@@ -1,18 +1,27 @@
 package com.example.movieproject;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie {
-    private String title, genre, year, description;
-    public int poster;
+    @JsonProperty("title")
+    private String title;
+    @JsonProperty("id")
+    private int id;
+    @JsonIgnore
+    private String genre;
+    @JsonProperty("release_date")
+    private String year;
+    @JsonProperty("overview")
+    private String description;
+
+    @JsonProperty("poster_path")
+    public String posterPath;
 
     public Movie() {
-    }
-
-    public Movie(String title, String genre, String year, int poster,String description) {
-        this.title = title;
-        this.genre = genre;
-        this.year = year;
-        this.poster = poster;
-        this.description = description;
     }
 
     public String getTitle() {
@@ -47,7 +56,15 @@ public class Movie {
         this.genre = genre;
     }
 
-    public int getPoster() {
-        return poster;
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

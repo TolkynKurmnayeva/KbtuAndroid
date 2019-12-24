@@ -56,9 +56,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Movie movie = moviesList.get(position);
         holder.title.setText(movie.getTitle());
-        holder.genre.setText(movie.getGenre());
+//        holder.genre.setText(movie.getGenre());
         holder.year.setText(movie.getYear());
-        Glide.with(mContext).load(movie.poster).into(holder.poster);
+        Glide.with(mContext).load("https://image.tmdb.org/t/p/w500/"+movie.getPosterPath()).into(holder.poster);
     }
 
     @Override
